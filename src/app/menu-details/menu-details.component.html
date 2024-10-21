@@ -1,0 +1,80 @@
+<div class="container mt-5">
+    <!-- Alert Message -->
+    <div class="alert alert-success animate-message" role="alert">
+      Enjoy your food!
+    </div>
+  
+    <!-- Carousel Structure -->
+    <div id="menuCarousel" class="carousel slide" data-bs-interval="false">
+      <div class="carousel-inner">
+        <!-- Carousel Inner Menu -->
+        <div *ngFor="let chunk of chunkedMenuItems; let i = index" class="carousel-item" [class.active]="i === 0">
+          <ul class="filters_menu d-flex justify-content-center mb-0">
+            <li *ngFor="let menu of chunk" class="menu-item mx-2">
+              <i [ngClass]="menu.icon"></i>
+              <span (click)="selectedmenu(menu.name)">{{ menu.name }}</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+  
+      <!-- Carousel Controls -->
+      <button class="carousel-control-prev" type="button" data-bs-target="#menuCarousel" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+      </button>
+  
+      <button class="carousel-control-next" type="button" data-bs-target="#menuCarousel" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+      </button>
+    </div>
+
+
+    <div class="row">
+        <div class="col-md-4 mb-4" *ngFor="let dish of SelectedmenuItems">
+            <div class="card dish-card shadow-sm">
+                <div class="img-box">
+                    <img [src]="dish.Imageurl" class="card-img-top img-fluid" alt="No image found">
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">{{dish.Dishname}}</h5>
+                    <p class="card-text">{{dish.Description || 'A mouth-watering dish made with fresh ingredients and cooked to perfection.'}}</p>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h6 class="text-primary">${{dish.Price}}</h6>
+                     <div class="d-flex align-items-center">
+                <div>
+                  <button *ngIf="getCount(dish.id) === 0" class="btn btn-warning btn-sm" (click)="addToCart(dish.id)">Add to Cart</button>
+    
+                  <div *ngIf="getCount(dish.id) > 0" class="d-flex align-items-center">
+                    <button type="button" class="btn btn-primary btn-sm" (click)="increment(dish.id)">+</button>
+                    <span class="mx-2">{{getCount(dish.id)}}</span>
+                    <button type="button" class="btn btn-primary btn-sm" (click)="decrement(dish.id)">-</button>
+                  </div>
+                </div>
+                </div>
+                        
+                      </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <div class="order-summary">
+        <div class="total-price">
+         1<span class="text-primary">item Added</span>
+        </div>
+        <button class="btn btn-success btn-lg"  (click)="Viewcart()"   >View Cart</button>
+      </div>
+      
+
+
+
+
+
+
+  </div>
+  

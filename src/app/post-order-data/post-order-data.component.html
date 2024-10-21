@@ -1,0 +1,43 @@
+<div class="container">
+    <div class="row justify-content-end">
+      <div class="col-md-6">
+        <!-- Iterate through the orders -->
+        <div *ngFor="let order of OrderedItems; let orderIndex = index">
+          
+          <!-- Display the order header -->
+          <h5>Order {{ orderIndex + 1 }}</h5>
+          <!-- Iterate through the dishes of each order -->
+          <div *ngFor="let dish of order.orderdata" class="card mb-3 shadow-sm">
+            <div class="row no-gutters">
+              <div class="col-md-4">
+                <img src="{{ dish.Imageurl }}" class="card-img" alt="{{ dish.Dishname }}" style="width: 100%;">
+              </div>
+              <div class="col-md-8">
+                <div class="card-body">
+                  <h5 class="card-title">{{ dish.dishName }} ({{ dish.food }})</h5>
+                
+                  <p class="card-text">Price: ₹{{ dish.price }}</p>
+                  <p class="card-text">
+                    <small class="text-muted">Dish Quantity: {{ dish.quantity }}</small>
+                  </p>
+                  <!-- Additional details -->
+                 <p>Quantity: {{ getQuantity(dish.id,orderIndex) }}</p>
+                  
+                 
+                </div>
+              </div>
+            </div>
+          </div>
+          <p>Total Price: ₹{{ getTotalPrice(orderIndex) }}</p> 
+          <p>Status: {{ getStatus() }}</p> 
+          <!-- Display order status -->
+          <!-- <p><strong>Order Status:</strong> {{ getOrderStatus(orderIndex) }}</p> -->
+  
+          <!-- Divider after each order -->
+          <hr class="mb-4" />
+          
+        </div>
+      </div>
+    </div>
+  </div>
+  

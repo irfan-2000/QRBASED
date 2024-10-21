@@ -1,0 +1,52 @@
+<div class="container">
+    <h2 class="my-4">Your Cart</h2>   
+  
+    <div class="session-container">
+      <div class="session-box">
+          <h2>Session Code</h2>
+          <p id="session-code">{{SessionCode}}</p> <!-- Replace with your dynamic session code -->
+      </div>
+  </div>
+  
+
+
+    <div *ngIf="isCartEmpty(); else cartList">
+        <h5>Your cart is empty. Please add items to your cart!</h5>
+      <a routerLink="/menu-details" class="btn btn-primary">Go to Menu</a>
+    </div> 
+
+  <h2>the items in cart</h2>
+    <ng-template #cartList>
+      <div *ngFor="let dish of selectedItemscart" class="card mb-3">
+        <div class="row g-0">
+          <div class="col-md-4">
+            <img [src]="dish.Imageurl" class="img-fluid rounded-start" alt="Dish Image">
+          </div>
+          <div class="col-md-8">
+            <div class="card-body">
+              <h5 class="card-title">{{ dish.Dishname }}</h5>
+              <p class="card-text">Price: ${{ dish.Price }}</p>
+              <div class="d-flex align-items-center">
+                <button class="btn btn-primary btn-sm me-2" (click)="increment(dish.id)">+</button>
+                <span>{{ getCount(dish.id) }}</span>
+                <button class="btn btn-primary btn-sm ms-2" (click)="decrement(dish.id)">-</button>
+                <button class="btn btn-danger btn-sm ms-2" (click)="removeFromCart(dish.id)">Remove</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+  
+      <div class="order-summary">
+        <div class="total-price">
+          Total Price: <span class="text-primary">${{ totalprice }}</span>
+        </div>
+        <button class="btn btn-success btn-lg" (click)="openPaymentModal()">Place Order</button>
+        <!-- <button mat-raised-button color="primary" (click)="openPaymentModal()">Proceed to Payment</button> -->
+      </div>
+    </ng-template>
+  </div>
+
+
+
+  <app-post-order-data></app-post-order-data>

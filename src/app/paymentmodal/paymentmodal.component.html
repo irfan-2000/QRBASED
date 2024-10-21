@@ -1,0 +1,28 @@
+<h2 mat-dialog-title>Payment</h2>
+<mat-dialog-content>
+  <form #paymentForm="ngForm" (ngSubmit)="submit(paymentForm)">
+    <mat-form-field appearance="fill">
+      <mat-label>Name</mat-label>
+      <input
+        matInput
+        [(ngModel)]="name"
+        name="name"
+        required
+        #nameInput="ngModel"
+      />
+      <mat-error *ngIf="nameInput.invalid && (nameInput.dirty || nameInput.touched)">
+        Name is required.
+      </mat-error>
+    </mat-form-field>
+    
+    <mat-form-field appearance="fill">
+      <mat-label>Amount</mat-label>
+      <input matInput [value]="amount" disabled />
+    </mat-form-field>
+
+    <div>
+      <button mat-button (click)="close()">Cancel</button>
+      <button mat-raised-button color="primary" type="submit" [disabled]="paymentForm.invalid">Pay Now</button>
+    </div>
+  </form>
+</mat-dialog-content>

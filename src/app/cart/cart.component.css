@@ -1,0 +1,53 @@
+.order-summary {
+    position: fixed; /* Keep it at the bottom */
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: #fff; /* White background for contrast */
+    padding: 15px 20px; /* Spacing */
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.2); /* Shadow for depth */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 1000; /* Ensure it stays above other content */
+}
+
+.total-price {
+    font-size: 1.5em; /* Increase font size for visibility */
+}
+
+
+.session-container
+ {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Full height of the viewport */
+    text-align: center; /* Center text inside container */
+}
+
+.session-box 
+{
+    background-color: #E3F2FD; /* White background for the box */
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Soft shadow */
+    padding: 20px; /* Padding inside the box */
+    width: 300px; /* Fixed width */
+    transition: transform 0.2s; /* Animation for hover effect */
+}
+
+.session-box:hover {
+    transform: scale(1.05); /* Slightly enlarge the box on hover */
+}
+
+h2 {
+    color: #333; /* Dark text color for the heading */
+    margin-bottom: 10px; /* Space below the heading */
+}
+
+p {
+    font-size: 24px; /* Larger font size for the session code */
+    font-weight: bold; /* Bold text */
+    color: #4CAF50; /* Green color for session code */
+    margin: 0; /* Remove default margin */
+}

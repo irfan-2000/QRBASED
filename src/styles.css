@@ -1,0 +1,119 @@
+/* You can add global styles to this file, and also import other style files */
+body {
+    background-color: white; /* Set your desired background color */
+}
+filters_menu {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+    padding: 0;
+  }
+  
+  .menu-item {
+    list-style: none;
+    margin: 0 15px;
+    padding: 10px 20px;
+    background-color: #FEA116; /* Your color theme */
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 18px;
+    color: #fff;
+    display: flex;
+    align-items: center;
+  }
+  
+  .menu-item i {
+    margin-right: 10px;
+  }
+  
+  .menu-item:hover {
+    background-color: #e59600; /* Darker shade on hover */
+  }
+  
+  .card {
+    margin-bottom: 20px;
+    background-color: #fff3e0; /* Light background for cards */
+  }
+  
+  .card-body {
+    text-align: center;
+  }
+ /* -------------- */
+
+
+ .carousel-control-prev,
+ .carousel-control-next {
+   margin-left: 269px; /* Adjusts the left margin for Previous button */
+   margin-right: 267px; /* Adjusts the right margin for Next button */
+   background-color: F1F8FF; /* Button background color */
+   border: none; /* Remove border */
+
+ }
+ 
+
+.carousel-control-prev,
+.carousel-control-next {
+  width:36px;
+}
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  background-color: #FEA116; /* Icon background color */
+  border-radius: 50%; /* Make icon background circular */
+  padding: 10px; /* Padding around the icon */
+}
+.menu-item {
+  font-size: 1.2rem;
+  padding: 10px;
+}
+
+.dish-card {
+  transition: transform 0.3s ease;
+  overflow: hidden;
+}
+
+.dish-card:hover {
+  transform: scale(1.03);
+}
+
+.img-box {
+  overflow: hidden;
+}
+
+.img-box img {
+  transition: transform 0.3s ease;
+}
+
+.dish-card:hover .img-box img {
+  transform: scale(1.1);
+}
+.order-summary {
+  position: fixed; /* Keep it at the bottom */
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: #fff; /* White background for contrast */
+  padding: 15px 20px; /* Spacing */
+  box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.2); /* Shadow for depth */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 1000; /* Ensure it stays above other content */
+}
+
+.total-price {
+  font-size: 1.5em; /* Increase font size for visibility */
+}
+
+@media (max-width: 576px) {
+  .order-summary {
+      flex-direction: column; /* Stack items on smaller screens */
+      align-items: flex-start;
+  }
+
+  .total-price {
+      margin-bottom: 10px; /* Space between price and button */
+  }
+}
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

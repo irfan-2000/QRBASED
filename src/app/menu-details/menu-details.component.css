@@ -1,0 +1,17 @@
+
+body {
+    background-color: white; /* Change to your desired background color */
+  }
+  
+.animate-message {
+    opacity: 0;
+    transform: translateY(-50px);
+    animation: slideIn 1s forwards;
+  }
+
+  @keyframes slideIn {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
