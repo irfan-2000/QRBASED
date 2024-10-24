@@ -19,11 +19,17 @@ export class MenuDetailsComponent {
 
 
 
-  ngOnInit() 
+   ngOnInit() 
   {
-    this.Dishes = this.dishesservice.getDishes();
-    this.selectedmenu('Pizza'); // Initialize with default selection to load cards
 
+    this.dishesservice.getDishes().then((dishes) => {
+      this.Dishes = dishes; // Assign the resolved value
+      this.selectedmenu('Pizza');
+      console.log("Dishes assigned in menu details:", this.Dishes);
+    }).catch((error) => {
+      console.error("Error fetching dishes:", error);
+    });
+     // Initialize with default selection to load cards
    
     this.tableNumber = this.dishesservice.getTableNumber();
     
@@ -42,7 +48,7 @@ export class MenuDetailsComponent {
     console.log("Selected menu--:",menuName);
 
     
-    this.SelectedmenuItems= this.Dishes.filter(dish =>dish.Category === menuName );
+    this.SelectedmenuItems= this.Dishes.filter(dish =>dish.menuname === menuName );
 
     console.log("Selected dishes:",this.SelectedmenuItems);
     
@@ -50,7 +56,7 @@ export class MenuDetailsComponent {
   }
 
 
-  addToCart(dishId: string) 
+  addToCart(dishId: any) 
   {
     console.log("the dishid is",dishId);
     this.dishesservice.addToCart(dishId);
@@ -59,7 +65,10 @@ export class MenuDetailsComponent {
   }
 
   // Method to increment dish quantity in cart
-  increment(dishId: string) {
+  increment(dishId: any)
+   {
+    
+    console.log("in increment function",dishId);
     this.dishesservice.increment(dishId);
     this.currentCart = this.dishesservice.getCart(); // Refresh currentCart after adding
 
@@ -79,12 +88,24 @@ export class MenuDetailsComponent {
   }
   
 
-constructor(private dishesservice:MenuDishesService,private router: Router,private route:ActivatedRoute)
+
+
+ constructor(private dishesservice:MenuDishesService,private router: Router,private route:ActivatedRoute)
 {
-  this.Dishes = this.dishesservice.getDishes();
-  this.currentCart = this.dishesservice.getCart(); // Get the cart as an object
-this.menuItems = this.dishesservice.getmenus();
-this.chunkedMenuItems = this.chunkArray(this.menuItems, 4);
+ 
+this.currentCart = this.dishesservice.getCart(); // Get the cart as an object
+
+this.dishesservice.getmenus().then((menus) => {
+  this.menuItems = menus; // Assign the resolved value
+  this.chunkedMenuItems = this.chunkArray(this.menuItems, 4);
+
+  console.log("Menu items assigned:", this.menuItems);
+}).catch((error) =>
+   {
+  console.log("Error fetching menus:", error);
+});
+
+
 
 }
 

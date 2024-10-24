@@ -47,10 +47,10 @@ export class HomemenuComponent
 
     this.selectmenuOnhome=menuName;
 
-    this.SelectedmenuItems= this.Dishes.filter(dish =>dish.Category === menuName );
+    this.SelectedmenuItems= this.Dishes.filter(dish =>dish.Menuname === menuName );
 
     console.log("Selected dishes:",this.SelectedmenuItems);
-    
+    debugger
 
   }
   
@@ -85,10 +85,21 @@ export class HomemenuComponent
   constructor(private dishesservice:MenuDishesService,private router: Router,private route:ActivatedRoute) 
   {
    this.chunkedMenuItems = this.chunkArray(this.menuItems, 4);
-   this.Dishes = this.dishesservice.getDishes();
-   this.currentCart = this.dishesservice.getCart(); // Get the cart as an object
-  this.menuItems = this.dishesservice.getmenus();
+   this.dishesservice.getDishes().then((dishes) => {
+    this.Dishes = dishes; // Assign the resolved value
+    console.log("Dishes assigned:", this.Dishes);
+}).catch((error) => {
+    console.error("Error fetching dishes:", error);
+});   
+this.currentCart = this.dishesservice.getCart();
 
+  this.dishesservice.getmenus().then((menus) => {
+    this.menuItems = menus; // Assign the resolved value
+    console.log("Menu items assigned:", this.menuItems);
+  }).catch((error) => {
+    console.log("Error fetching menus:", error);
+  });
+  
   }
   // Function to chunk the array into smaller arrays of 4
   chunkArray(arr: any[], chunkSize: number): any[] 

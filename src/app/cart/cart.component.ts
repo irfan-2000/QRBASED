@@ -25,7 +25,8 @@ export class CartComponent {
 
   constructor(private dishesservice:MenuDishesService,private dialog:MatDialog)
   {
-    this.Dishes = this.dishesservice.getDishes();
+  
+
     this.currentCart = this.dishesservice.getCart(); // Get the cart as an object
     this.currentCart = this.dishesservice.getCart(); // Get the cart as an object
     this.SessionCode = this.dishesservice.SessionCode;
@@ -33,7 +34,7 @@ export class CartComponent {
     
    
   }
-
+ 
 
 
   openPaymentModal(): void 
@@ -69,12 +70,24 @@ export class CartComponent {
 ngOnInit()
 {
   this.tableNumber = this.dishesservice.getTableNumber();
-this.selectedItemscart = Object.keys(this.currentCart).map(id => this.dishesservice.getDishes().find(dish => dish.id === id));
+  this.dishesservice.getDishes().then((dishes) => {
+    this.Dishes = dishes; 
+    this.selectedItemscart = Object.keys(this.currentCart).map(id => this.Dishes.find(dish => dish.dishId === parseInt(id, 10)));
 
-console.log(this.selectedItemscart);
+    this.calculateTotalPrice();
+    this.calculateCartItems();
+    console.log("Dishes assigned:", this.Dishes);
 
-this.calculateTotalPrice();
-this.calculateCartItems();
+
+  }).catch((error) => {
+    console.error("Error fetching dishes:", error);
+  });
+
+
+  
+
+
+
 setTimeout(() => {
   
 
@@ -90,7 +103,7 @@ setTimeout(() => {
 }
 
 
-increment(dishId: string)
+increment(dishId: any)
  {
   this.dishesservice.increment(dishId);
   this.currentCart = this.dishesservice.getCart(); // Refresh currentCart after adding
@@ -99,25 +112,29 @@ increment(dishId: string)
 }
 
 // Method to decrement dish quantity in cart
-decrement(dishId: string)
+decrement(dishId: any)
  {
   this.dishesservice.decrement(dishId);
   this.currentCart = this.dishesservice.getCart(); // Refresh currentCart after adding
-  this.selectedItemscart = Object.keys(this.currentCart).map(id => this.dishesservice.getDishes().find(dish => dish.id === id));
-  this.calculateTotalPrice();
+  this.selectedItemscart = Object.keys(this.currentCart).map(id => 
+    this.Dishes.find(dish => dish.dishId === parseInt(id, 10))
+  );
+    this.calculateTotalPrice();
 
 
 }
 calculateTotalPrice() 
 {
   
+  
   this.totalprice = 0;
-  for (const dishId in this.currentCart) {
+  for (const dishId in this.currentCart)
+     {
     const count = this.currentCart[dishId];
-    const dish = this.dishesservice.getDishes().find(d => d.id === dishId);
+    const dish = this.Dishes.find(d => d.dishId === parseInt(dishId));
     if (dish) 
       {
-      this.totalprice += Number(dish.Price) * count;
+      this.totalprice += Number(dish.price) * count;
     }
   }
 }
@@ -129,7 +146,7 @@ console.log(Object.keys(this.currentCart).length);
 
 }
 
-removeFromCart(dishId:string)
+removeFromCart(dishId:any)
 {
 
 
@@ -138,7 +155,7 @@ console.log(del);
 
 this.currentCart = this.dishesservice.getCart(); // Refresh currentCart after adding
 
-this.selectedItemscart = Object.keys(this.currentCart).map(id => this.dishesservice.getDishes().find(dish => dish.id === id));
+this.selectedItemscart = Object.keys(this.currentCart).map(id =>this.Dishes.find(dish => dish.dishId === parseInt(id, 10)));
 this.calculateCartItems();
 this.calculateTotalPrice();
 this.calculateTotalPrice();

@@ -3,7 +3,8 @@
       <div class="col-md-6">
         <!-- Iterate through the orders -->
         <div *ngFor="let order of OrderedItems; let orderIndex = index">
-          
+          <p>Status: {{ OrderStatuses[order.orderID] }}</p>
+           
           <!-- Display the order header -->
           <h5>Order {{ orderIndex + 1 }}</h5>
           <!-- Iterate through the dishes of each order -->
@@ -21,7 +22,7 @@
                     <small class="text-muted">Dish Quantity: {{ dish.quantity }}</small>
                   </p>
                   <!-- Additional details -->
-                 <p>Quantity: {{ getQuantity(dish.id,orderIndex) }}</p>
+                 
                   
                  
                 </div>
@@ -29,7 +30,7 @@
             </div>
           </div>
           <p>Total Price: ₹{{ getTotalPrice(orderIndex) }}</p> 
-          <p>Status: {{ getStatus() }}</p> 
+          
           <!-- Display order status -->
           <!-- <p><strong>Order Status:</strong> {{ getOrderStatus(orderIndex) }}</p> -->
   

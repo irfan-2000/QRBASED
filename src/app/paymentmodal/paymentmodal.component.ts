@@ -143,6 +143,10 @@ saveOrderItems(orderItems: any, customerName: string,OrderId:any)
   this.dishesservice.saveOrderItems(name,OrderId).subscribe ((result) => 
   {
     console.log(result);
+    console.log("the order items saved---");
+    
+    localStorage.removeItem('cart');
+    window.location.reload();
   });
   console.log('Customer Name:', customerName);
 }

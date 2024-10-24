@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { MenuDishesService } from '../menu-dishes.service';
 import { json } from 'stream/consumers';
+import { Observable } from 'rxjs';
+import { ok } from 'assert';
 @Component({
   selector: 'app-post-order-data',
   templateUrl: './post-order-data.component.html',
@@ -31,30 +33,34 @@ FilteredKeys:any = Object.keys(this.OrderedItems);
      return 0;
    }
    
+OrderStatus:any='';
+Count:Number =0;
+OrderStatuses: { [key: string]: string } = {};  // To store statuses keyed by orderID
 
 
+fetchOrderStatus(orderId: string) {
+  this.dishes.getOrderStatus(orderId).subscribe((response: string) =>
+     {
+    this.OrderStatuses[orderId] = response;  // Store the status keyed by order ID
+    console.log(`Order Status for ${orderId}:`, response);
+    
+  }, error => {
+    console.error('Error fetching order status:', error);
+    this.OrderStatuses[orderId] = 'Error fetching status';  // Handle errors gracefully
+  });
+}
 
-  getStatus()
+
+  getTotalPrice(orderIndex: number): number 
   {
-    return "preparing";
-  }
-
-
-  getTotalPrice(orderIndex: number): number {
+    console.log("total price all");
   let totalPrice: number = 0;
 
-  // Get the dish IDs (keys) from the OrderedItems array for the specified order
-  let keys: string[] = Object.keys(this.OrderedItems[orderIndex]);
+  const orderItems = this.OrderedItems[orderIndex].orderdata;
 
-  // Loop through the keys (dish IDs)
-  keys.forEach((key: string) => {
-    // Find the dish from the dishes list based on the id (key)
-    const dish = this.Dishes.find((dish: { id: string; }) => dish.id === key);
-
-    if (dish) {
-      // Multiply the dish price by the quantity for this dish and add to total price
-      totalPrice += dish.Price * this.getQuantity(key, orderIndex);
-    }
+  // Iterate over each dish in the orderdata
+  orderItems.forEach((item: any) => {
+    totalPrice += item.price * item.quantity;
   });
 
   // Return the calculated total price
@@ -74,8 +80,12 @@ constructor(private dishes:MenuDishesService)
   this.dishes.getOrderedItems().subscribe(
     (response) => {
       this.OrderedItems = response;
+       // Fetch all order statuses once when the component initializes
+  this.OrderedItems.forEach((order:any) => {
+    this.fetchOrderStatus(order.orderID);
+  });
       console.log("the response of get",this.OrderedItems);
-      
+     
      // this.processOrderedMenu();
     },
     (error) => {
@@ -83,9 +93,14 @@ constructor(private dishes:MenuDishesService)
     }
   );
 
-  this.Dishes = this.dishes.getDishes();
-
-
+  this.dishes.getDishes().then((dishes) => {
+    this.Dishes = dishes; // Assign the resolved value
+    console.log("Dishes assigned:", this.Dishes);
+}).catch((error) => {
+    console.error("Error fetching dishes:", error);
+});
+ // this.dishes.emptyCart();
+//this.fetchOrderStatus('order_PC42CH1adMCpZM');
 }
 
 processOrderedMenu(): void 

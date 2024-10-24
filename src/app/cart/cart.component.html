@@ -24,13 +24,13 @@
           </div>
           <div class="col-md-8">
             <div class="card-body">
-              <h5 class="card-title">{{ dish.Dishname }}</h5>
-              <p class="card-text">Price: ${{ dish.Price }}</p>
+              <h5 class="card-title">{{ dish.dishName }}</h5>
+              <p class="card-text">Price: ${{ dish.price }}</p>
               <div class="d-flex align-items-center">
-                <button class="btn btn-primary btn-sm me-2" (click)="increment(dish.id)">+</button>
-                <span>{{ getCount(dish.id) }}</span>
-                <button class="btn btn-primary btn-sm ms-2" (click)="decrement(dish.id)">-</button>
-                <button class="btn btn-danger btn-sm ms-2" (click)="removeFromCart(dish.id)">Remove</button>
+                <button class="btn btn-primary btn-sm me-2" (click)="increment(dish.dishId)">+</button>
+                <span>{{ getCount(dish.dishId) }}</span>
+                <button class="btn btn-primary btn-sm ms-2" (click)="decrement(dish.dishId)">-</button>
+                <button class="btn btn-danger btn-sm ms-2" (click)="removeFromCart(dish.dishId)">Remove</button>
               </div>
             </div>
           </div>
